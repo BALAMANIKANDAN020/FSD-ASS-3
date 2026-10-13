@@ -72,7 +72,8 @@ with open(os.path.join(base_dir, "src", "App.js"), "r", encoding="utf-8") as f:
 add_code_block(doc, "App.js", app_js_code)
 
 # 5. Commands Section
-commands = """# 1. Build Docker image locally
+commands = """=== OPTION 1: HEROKU CONTAINER REGISTRY ===
+# 1. Build Docker image locally
 docker build -t my-react-app .
 
 # 2. Verify local Docker images
@@ -96,7 +97,21 @@ heroku container:push web -a <your-app-name>
 heroku container:release web -a <your-app-name>
 
 # 8. Open live cloud application
-heroku open -a <your-app-name>"""
+heroku open -a <your-app-name>
+
+=== OPTION 2: RENDER CLOUD DOCKER DEPLOYMENT (FREE TIER) ===
+# 1. Push project to GitHub
+git remote add origin https://github.com/balamanikandan020/<repo-name>.git
+git branch -M main
+git push -u origin main
+
+# 2. On Render Dashboard (https://dashboard.render.com):
+#    - Click "New +" -> "Web Service"
+#    - Connect your GitHub repository
+#    - Runtime: Docker (Automatically builds Dockerfile)
+#    - Plan: Free
+#    - Click "Deploy Web Service"
+#    - Live URL: https://<app-name>.onrender.com"""
 add_code_block(doc, "Step-by-Step Terminal Commands", commands)
 
 # 6. Output & Screenshots Checklist
@@ -116,13 +131,12 @@ for cell in hdr_cells:
             run.font.size = Pt(10)
 
 items = [
-    ("1", "Docker image build successful (terminal)", "docker build -t my-react-app ."),
-    ("2", "Docker container running locally (port 3000)", "docker run -p 3000:3000 my-react-app"),
-    ("3", "Local browser test (http://localhost:3000)", "Working React application on localhost"),
-    ("4", "Heroku App created on Dashboard", "Heroku Dashboard showing the new app"),
-    ("5", "Deployment Method: Container Registry", "Deploy tab -> Container Registry selected"),
-    ("6", "Docker deployment successful to Heroku", "heroku container:push web & release web"),
-    ("7", "Final Live Deployed Cloud Application ⭐", "Live React App on https://<app-name>.herokuapp.com"),
+    ("1", "GitHub Repository created with Dockerfile", "GitHub repo push successful"),
+    ("2", "Docker image build successful (terminal/cloud)", "docker build -t my-react-app ."),
+    ("3", "Local browser test (http://localhost:3000)", "Working React application locally"),
+    ("4", "Cloud Dashboard (Heroku / Render)", "Cloud Web Service created from Dockerfile"),
+    ("5", "Docker container build & deploy logs", "Successful container build in cloud"),
+    ("6", "Final Live Deployed Cloud Application ⭐", "Live React App on Cloud (Heroku / Render)"),
 ]
 
 for row_data in items:
